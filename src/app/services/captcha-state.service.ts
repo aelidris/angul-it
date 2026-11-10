@@ -41,7 +41,7 @@ export class CaptchaStateService {
   public submitCurrentAnswer(answer: any): boolean {
     const currentState = this.state();
     const current = currentState.challenges[currentState.currentIndex];
-    
+
     if (!current) return false;
 
     const isValid = this.validateAnswer(current, answer);
@@ -119,37 +119,23 @@ export class CaptchaStateService {
   }
 
   private generateRandomChallenges(): Challenge[] {
-    const pool: Challenge[] = [
+    return [
       {
         id: 'c1',
-        type: 'image-select',
+        type: 'image-select' as const,
         instruction: 'Select all images containing cats',
         targetCategory: 'cats',
         images: [
-          { id: 'img1', url: 'assets/cat1.jpg', isTarget: true },
-          { id: 'img2', url: 'assets/dog1.jpg', isTarget: false },
-          { id: 'img3', url: 'assets/cat2.jpg', isTarget: true },
-          { id: 'img4', url: 'assets/car1.jpg', isTarget: false },
-          { id: 'img5', url: 'assets/cat3.jpg', isTarget: true },
-          { id: 'img6', url: 'assets/dog2.jpg', isTarget: false }
+          { id: 'img1', url: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=150', isTarget: true },
+          { id: 'img2', url: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=150', isTarget: false },
+          { id: 'img3', url: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=150', isTarget: true },
+          { id: 'img4', url: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=150', isTarget: true },
+          { id: 'img5', url: 'https://images.unsplash.com/photo-1561948955-570b270e7c36?w=150', isTarget: true },
+          { id: 'img6', url: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=150', isTarget: true }
         ]
       },
-      {
-        id: 'c2',
-        type: 'math',
-        instruction: 'Solve the equation to verify humanity',
-        question: 'What is 14 + 28?',
-        correctAnswer: 42
-      },
-      {
-        id: 'c3',
-        type: 'text-input',
-        instruction: 'Type the exact security code shown below',
-        codeToType: 'X7k9P'
-      }
-    ];
-
-    // Fisher-Yates shuffle for randomized sessions
-    return pool.sort(() => Math.random() - 0.5);
+      { id: 'c2', type: 'math' as const, instruction: 'Solve the equation', question: '14 + 28 = ?', correctAnswer: 42 },
+      { id: 'c3', type: 'text-input' as const, instruction: 'Type the code below', codeToType: 'X7k9P' }
+    ].sort(() => Math.random() - 0.5) as Challenge[];
   }
 }

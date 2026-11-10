@@ -29,7 +29,7 @@ import { Challenge } from '../../models/captcha.model';
             [class.selected]="selectedImageIds.includes(img.id)"
             (click)="toggleImageSelection(img.id)"
           >
-            <div class="img-placeholder">{{ img.id }}</div>
+            <img [src]="img.url" alt="captcha image" class="challenge-img" />
             <div class="checkmark" *ngIf="selectedImageIds.includes(img.id)">✓</div>
           </div>
         </div>
@@ -88,6 +88,20 @@ import { Challenge } from '../../models/captcha.model';
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
+      .grid-item {
+      height: 100px; background: #f1f5f9; border: 2px solid transparent;
+      border-radius: 8px; cursor: pointer; position: relative; overflow: hidden;
+    }
+    .challenge-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .grid-item.selected { border-color: #2563eb; }
+    .checkmark { 
+      position: absolute; top: 5px; right: 8px; 
+      background: #2563eb; color: white; border-radius: 50%; 
+      width: 22px; height: 22px; display: flex; align-items: center; 
+      justify-content: center; font-size: 12px; font-weight: bold;
+    }
     .progress-bar { margin-bottom: 1.5rem; font-size: 0.9rem; color: #64748b; }
     .track { height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 0.4rem; }
     .fill { height: 100%; background: #2563eb; border-radius: 3px; transition: width 0.3s ease; }
@@ -138,7 +152,7 @@ export class CaptchaComponent implements OnInit {
     private fb: FormBuilder,
     private stateService: CaptchaStateService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
