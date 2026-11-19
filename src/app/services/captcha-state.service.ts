@@ -19,6 +19,7 @@ export class CaptchaStateService {
   public readonly isCompleted = computed(() => this.state().completed);
   public readonly canAccessResults = computed(() => this.state().completed);
   public readonly allChallenges = computed(() => this.state().challenges);
+  public readonly userAnswers = computed(() => this.state().userAnswers);
 
   constructor() {
     if (this.state().challenges.length === 0) {
